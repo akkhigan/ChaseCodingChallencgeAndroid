@@ -7,7 +7,7 @@ import com.chase.codechallenge.domain.model.Forecast
 import com.chase.codechallenge.domain.usecase.forecast.*
 import com.chase.codechallenge.domain.usecase.location.GetLocationUseCase
 import com.chase.codechallenge.common.Resource
-import com.chase.codechallenge.common.utils.ExceptionTitles
+import com.chase.codechallenge.common.utils.ErrorMessages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
                 } else if (isForecastCached()) {
                     getCachedForecast()
                 } else {
-                    _weatherState.value = WeatherState.Error(ExceptionTitles.NO_INTERNET_CONNECTION)
+                    _weatherState.value = WeatherState.Error(ErrorMessages.NO_INTERNET_CONNECTION)
                 }
             } catch (e: Exception) {
                 if (isForecastCached()) {

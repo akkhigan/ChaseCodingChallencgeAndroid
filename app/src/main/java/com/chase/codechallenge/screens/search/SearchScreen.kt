@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
@@ -20,6 +21,9 @@ import com.chase.codechallenge.domain.model.Forecast
 import com.chase.codechallenge.domain.model.MyCity
 import com.chase.codechallenge.screens.component.CircularProgressBar
 import com.chase.codechallenge.screens.component.CityWeatherCard
+import com.chase.codechallenge.ui.theme.Blue
+import com.chase.codechallenge.ui.theme.DarkBlue
+import com.chase.codechallenge.ui.theme.LightBlue
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel, onNavigateToHomeScreen: () -> Unit) {
@@ -29,7 +33,7 @@ fun SearchScreen(viewModel: SearchViewModel, onNavigateToHomeScreen: () -> Unit)
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = android.R.color.holo_blue_light)),
+            .background(Brush.verticalGradient(listOf(DarkBlue, Blue, LightBlue))),
         topBar = { SearchTopBar(onNavigateToHomeScreen) },
         backgroundColor = Color.Transparent
     ) {
@@ -126,7 +130,7 @@ private fun SearchField(viewModel: SearchViewModel) {
 private fun WantedCityWeatherSection(forecast: Forecast, viewModel: SearchViewModel) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().wrapContentHeight()
             .padding(top = 16.dp)
     ) {
         Text(text = AppStrings.subtitle2, style = MaterialTheme.typography.h2)
@@ -164,7 +168,7 @@ private fun MyCities(myCitiesState: MyCitiesState, viewModel: SearchViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(text = AppStrings.no_city)
+                        Text(text = AppStrings.emptyScreen)
                     }
                 } else {
                     CityListSection(myCitiesState.forecast, viewModel)

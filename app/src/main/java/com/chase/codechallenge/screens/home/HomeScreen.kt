@@ -11,14 +11,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.chase.codechallenge.common.utils.AppStrings
 import com.chase.codechallenge.domain.model.Forecast
 import com.chase.codechallenge.screens.component.*
+import com.chase.codechallenge.ui.theme.Blue
+import com.chase.codechallenge.ui.theme.DarkBlue
+import com.chase.codechallenge.ui.theme.LightBlue
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -29,7 +32,7 @@ fun HomeScreen(viewModel: HomeViewModel, onNavigateToSearchScreen: () -> Unit) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.holo_blue_light)),
+            .background(Brush.verticalGradient(listOf(DarkBlue, Blue, LightBlue))),
         topBar = { HomeTopBar() },
         backgroundColor = Color.Transparent
     ) {

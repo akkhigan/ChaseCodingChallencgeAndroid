@@ -7,8 +7,8 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
+import com.chase.codechallenge.common.utils.ErrorMessages
 import com.chase.codechallenge.domain.location.LocationTracker
-import com.chase.codechallenge.common.utils.ExceptionTitles
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
@@ -38,9 +38,9 @@ class DefaultLocationTracker @Inject constructor(
             )
 
         if (!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission) {
-            throw Exception(ExceptionTitles.NO_PERMISSION)
+            throw Exception(ErrorMessages.NO_PERMISSION)
         } else if (!isGpsEnabled) {
-            throw Exception(ExceptionTitles.GPS_DISABLED)
+            throw Exception(ErrorMessages.GPS_DISABLED)
         }
 
         return suspendCancellableCoroutine { cont ->
