@@ -21,6 +21,9 @@ import com.chase.codechallenge.screens.home.HomeViewModel
 import com.chase.codechallenge.screens.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * MainActivity: This is a Single Activity Application With JetPack Compose UI
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavGraph(
                         homeViewModel = homeViewModel,
-                        searchCityViewModel = searchCityViewModel
+                        searchViewModel = searchCityViewModel
                     )
                 }
             }

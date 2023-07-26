@@ -17,7 +17,7 @@ import com.chase.codechallenge.screens.search.SearchViewModel
 fun NavGraph(
     startDestination: String = NavScreen.HomeScreen.route,
     homeViewModel: HomeViewModel,
-    searchCityViewModel: SearchViewModel
+    searchViewModel: SearchViewModel
 ) {
     val navController = rememberNavController()
 
@@ -33,7 +33,7 @@ fun NavGraph(
                 HomeScreen(homeViewModel) { navController.navigate(NavScreen.SearchScreen.route) }
             }
             composable(NavScreen.SearchScreen.route) {
-                SearchScreen(searchCityViewModel) {
+                SearchScreen(searchViewModel) {
                     navController.navigate(NavScreen.HomeScreen.route) {
                         launchSingleTop = true
                         popUpTo(NavScreen.HomeScreen.route)

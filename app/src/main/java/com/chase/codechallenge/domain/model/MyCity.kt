@@ -6,5 +6,6 @@ data class MyCity(
     var longitude: Double,
     var cityName: String,
     var country: String,
-    var description: String
+    var description: String,
+    var icon:String
 )

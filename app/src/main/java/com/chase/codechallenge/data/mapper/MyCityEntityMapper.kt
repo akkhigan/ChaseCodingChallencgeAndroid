@@ -14,6 +14,7 @@ class MyCityEntityMapper @Inject constructor() {
                 it.cityName,
                 it.country,
                 it.description,
+                it.icon
             )
         }
     }
@@ -26,6 +27,7 @@ class MyCityEntityMapper @Inject constructor() {
             cityName = model.cityName,
             country = model.country,
             description = model.description,
+            icon = model.icon
         )
     }
 }

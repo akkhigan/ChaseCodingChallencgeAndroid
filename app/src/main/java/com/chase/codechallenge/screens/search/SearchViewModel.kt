@@ -24,7 +24,9 @@ class SearchViewModel @Inject constructor(
     private val getWetherByCityName: GetWetherByCityNameUseCase,
     private val getMyCityUseCase: GetMyCityUseCase,
     private val updateMyCityUseCase: UpdateMyCityUseCase,
-) : ViewModel() {
+    private val getSpecificCityUseCase: GetSpecificCityUseCase,
+    private val addMyCityUseCase: AddMyCityUseCase,
+    ) : ViewModel() {
 
     private val _searchCityState = MutableStateFlow<SearchCityState>(SearchCityState.Loading)
     val searchCityState = _searchCityState.asStateFlow()
@@ -75,6 +77,22 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun addMyCity(myCity: MyCity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (!getSpecificCityUseCase.getSpecificCityUseCase(myCity.cityName)) {
+                    addMyCityUseCase.addMyCity(myCity)
+                    loadMyCities()
+                } else {
+                    Log.e("add city", "you have already added this city")
+                }
+            } catch (e: Exception) {
+                Log.e("e", e.message.toString())
+            }
+        }
+    }
+
+
     private suspend fun fetchForecastWithCityName(cityName: String) {
         when (val result = getWetherByCityName.getForecast(cityName)) {
             is Resource.Success -> {
@@ -86,9 +104,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-
-    // no internet connection -> load cities from database
-    // internet connection -> update our cities
+    /**
+     *  If no internet connection -> load cities from database
+     *  If has internet connection -> update our cities
+     */
     private fun updateMyCity() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -103,7 +122,8 @@ class SearchViewModel @Inject constructor(
                                         longitude = result.data.cityDtoData.coordinate.longitude,
                                         cityName = result.data.cityDtoData.cityName,
                                         country = result.data.cityDtoData.country,
-                                        description = result.data.weatherList[0].weatherStatus[0].description
+                                        description = result.data.weatherList[0].weatherStatus[0].description,
+                                        icon = result.data.weatherList[0].weatherStatus[0].icon
                                     )
                                 )
                                 _myCitiesState.value =

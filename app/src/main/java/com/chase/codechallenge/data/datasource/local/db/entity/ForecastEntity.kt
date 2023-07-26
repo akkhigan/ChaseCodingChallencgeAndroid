@@ -32,6 +32,9 @@ data class ForecastEntity(
     @ColumnInfo(name = "main_description")
     var mainDescription: String,
 
+    @ColumnInfo(name = "icon")
+    var icon: String,
+
     @ColumnInfo(name = "date")
     var date: String,
 

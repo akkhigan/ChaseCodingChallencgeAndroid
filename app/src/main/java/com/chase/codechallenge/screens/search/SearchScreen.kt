@@ -16,14 +16,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import com.chase.codechallenge.R
 import com.chase.codechallenge.common.utils.AppStrings
 import com.chase.codechallenge.domain.model.Forecast
 import com.chase.codechallenge.domain.model.MyCity
 import com.chase.codechallenge.screens.component.CircularProgressBar
 import com.chase.codechallenge.screens.component.CityWeatherCard
-import com.chase.codechallenge.ui.theme.Blue
-import com.chase.codechallenge.ui.theme.DarkBlue
-import com.chase.codechallenge.ui.theme.LightBlue
+import com.chase.codechallenge.ui.theme.*
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel, onNavigateToHomeScreen: () -> Unit) {
@@ -73,6 +73,19 @@ private fun SearchCityScreenContent(
                 viewModel.updateSearchField("")
                 if (searchState.forecast != null) {
                     WantedCityWeatherSection(searchState.forecast, viewModel)
+
+                    //Add the resulted city to Local storage
+                    viewModel.addMyCity(
+                        MyCity(
+                            temp = searchState.forecast.weatherList[0].weatherData.temp,
+                            latitude = searchState.forecast.cityDtoData.coordinate.latitude,
+                            longitude = searchState.forecast.cityDtoData.coordinate.longitude,
+                            cityName = searchState.forecast.cityDtoData.cityName,
+                            country = searchState.forecast.cityDtoData.country,
+                            description = searchState.forecast.weatherList[0].weatherStatus[0].description,
+                            icon = searchState.forecast.weatherList[0].weatherStatus[0].icon,
+                        )
+                    )
                 }
             }
             is SearchCityState.Error -> {
@@ -89,17 +102,17 @@ private fun SearchCityScreenContent(
 private fun SearchTopBar(onBackClick: () -> Unit) {
     TopAppBar(
         modifier = Modifier.statusBarsPadding(),
-        title = { Text(text = AppStrings.search_topbar_title, style = MaterialTheme.typography.h2) },
+        title = { Text(text = AppStrings.search_title, style = MaterialTheme.typography.h2) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    painter = painterResource(id = android.R.drawable.ic_delete),
+                    painter = painterResource(id = R.drawable.ic_arrow_back_24),
                     contentDescription = null,
                     tint = Color.White
                 )
             }
         },
-        backgroundColor = Color.Transparent,
+        backgroundColor = Purple200,
         elevation = 0.dp
     )
 }
@@ -130,7 +143,8 @@ private fun SearchField(viewModel: SearchViewModel) {
 private fun WantedCityWeatherSection(forecast: Forecast, viewModel: SearchViewModel) {
     Column(
         modifier = Modifier
-            .fillMaxWidth().wrapContentHeight()
+            .fillMaxWidth()
+            .height(LocalConfiguration.current.screenHeightDp.dp / 4)
             .padding(top = 16.dp)
     ) {
         Text(text = AppStrings.subtitle2, style = MaterialTheme.typography.h2)
@@ -142,7 +156,8 @@ private fun WantedCityWeatherSection(forecast: Forecast, viewModel: SearchViewMo
             longitude = forecast.cityDtoData.coordinate.longitude,
             city = forecast.cityDtoData.cityName,
             country = forecast.cityDtoData.country,
-            description = forecast.weatherList[0].weatherStatus[0].description
+            description = forecast.weatherList[0].weatherStatus[0].description,
+            icon = forecast.weatherList[0].weatherStatus[0].icon
         )
     }
 }
@@ -202,7 +217,8 @@ private fun CityListSection(cityList: List<MyCity>, viewModel: SearchViewModel) 
                 longitude = it.longitude,
                 city = it.cityName,
                 country = it.country,
-                description = it.description
+                description = it.description,
+                icon =  it.icon
             )
         }
     }

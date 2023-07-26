@@ -1,13 +1,15 @@
 package com.chase.codechallenge.screens.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import com.chase.codechallenge.ui.theme.DarkBlue
 
 @Composable
 fun CityWeatherCard(
@@ -17,14 +19,15 @@ fun CityWeatherCard(
     longitude: Double,
     city: String,
     country: String,
-    description: String
+    description: String,
+    icon:String
 ) {
     Card(
         modifier = modifier,
-        backgroundColor = Color.LightGray,
+        backgroundColor = DarkBlue,
         shape = MaterialTheme.shapes.medium
     ) {
-        WeatherInfo(degree, latitude, longitude, city, country, description)
+        WeatherInfo(degree, latitude, longitude, city, country, description,icon)
     }
 }
 
@@ -37,14 +40,13 @@ private fun WeatherInfo(
     city: String,
     country: String,
     description: String,
+    icon:String
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+        modifier = Modifier.fillMaxSize()
     ) {
-        DegreeAndButtonSection(degree = degree)
-        Text(modifier = Modifier.padding(16.dp), text = "${city}, $country", fontSize = 24.sp)
+        DegreeAndButtonSection(degree = degree, icon = icon)
+        Text(modifier = Modifier.padding(horizontal = 16.dp), text = "${city}, $country", fontSize = 24.sp)
         LocationAndDescription(latitude, longitude, description)
     }
 }
@@ -52,12 +54,19 @@ private fun WeatherInfo(
 @Composable
 private fun DegreeAndButtonSection(
     degree: String,
+    icon:String
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(modifier = Modifier.padding(start = 16.dp), text = degree, fontSize = 76.sp)
+        val painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/$icon@2x.png")
+        Text(modifier = Modifier.padding(start = 16.dp), text = degree, fontSize = 60.sp)
+        Image(
+            modifier = Modifier.size(80.dp),
+            painter = painter,
+            contentDescription = null
+        )
     }
 }
 
@@ -68,9 +77,7 @@ private fun LocationAndDescription(
     description: String,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 16.dp, top = 40.dp),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

@@ -16,7 +16,7 @@ class ForecastDtoMapper @Inject constructor() : IEntityMapper<ForecastDto, Forec
                     it.weatherData.humidity
                 ),
                 weatherStatus = listOf(
-                    Weather(it.weatherStatus[0].mainDescription, it.weatherStatus[0].description)
+                    Weather(it.weatherStatus[0].mainDescription, it.weatherStatus[0].description, it.weatherStatus[0].icon)
                 ),
                 wind = Wind(it.wind.speed),
                 date = it.date,
@@ -50,7 +50,7 @@ class ForecastDtoMapper @Inject constructor() : IEntityMapper<ForecastDto, Forec
                     it.weatherData.humidity
                 ),
                 listOf(
-                    WeatherDto(it.weatherStatus[0].mainDescription, it.weatherStatus[0].description)
+                    WeatherDto(it.weatherStatus[0].mainDescription, it.weatherStatus[0].description, it.weatherStatus[0].icon)
                 ),
                 WindDto(it.wind.speed),
                 it.date,

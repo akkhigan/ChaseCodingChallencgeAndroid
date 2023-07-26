@@ -28,4 +28,7 @@ data class MyCityEntity(
 
     @ColumnInfo(name = "description")
     var description: String,
+
+    @ColumnInfo(name = "icon")
+    var icon: String,
 )

@@ -6,8 +6,8 @@ object AppStrings {
     const val degree = "°"
 
     // SearchScreen
-    const val home_topbar_title = "Current Weather"
-    const val search_topbar_title = "Search by City"
+    const val home_title = "Current Weather"
+    const val search_title = "Search by City"
 
     // SearchScreen -> SearchField
     const val placeholder = "Enter city name"
@@ -17,8 +17,6 @@ object AppStrings {
     const val subtitle2 = "Search Result"
     const val emptyScreen = "Search for get city Weather report"
 
-    // SearchCityScreen -> SearchCityScreenContent
-    const val error_title = "OOOOPS!!!"
 }
 
 object NetworkService {
