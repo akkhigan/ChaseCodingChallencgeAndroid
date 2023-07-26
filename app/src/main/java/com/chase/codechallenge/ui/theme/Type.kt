@@ -1,6 +1,7 @@
 package com.chase.codechallenge.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -12,8 +13,28 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    )
-    /* Other default text styles to override
+    ),
+    h1 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Light,
+        color = Color.White,
+        fontSize = 96.sp,
+        letterSpacing = 0.sp,
+    ),
+    h2 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        color = Color.White,
+        fontSize = 36.sp,
+        letterSpacing = 0.sp
+    ),
+    h3 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.SemiBold,
+        color = Color.White,
+        fontSize = 20.sp,
+        letterSpacing = 0.sp
+    ),
     button = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W500,
@@ -24,5 +45,4 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     )
-    */
 )
